@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+.section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  color: #ffd700;
+}
+.movie-section {
+  margin-bottom: 3rem;
+}
+.movie-poster {
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px 0 rgba(60,0,80,0.25);
+  transition: transform 0.2s;
+  cursor: pointer;
+  height: 320px;
+  width: 100%;
+  object-fit: cover;
+  background: #2a1e00;
+}
+.movie-poster:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px 0 rgba(60,0,80,0.35);
+}
+.poster-title {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  color: #ffd700;
+  font-weight: 500;
+}
+.text-center.glass.mb-5 {
+  background: rgba(40, 0, 60, 0.10);
+  color: #ffd700;
+}
+</style>
+<div class="text-center glass mb-5">
+    <h1 class="display-4 fw-bold">🎬 Movie Magic</h1>
+    <p class="lead">Experience the future of movie booking.</p>
+</div>
+
+<!-- Movie Carousel -->
+<div id="movieCarousel" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="3000">
+  <div class="carousel-inner">
+    {% for movie in movies %}
+    <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+      <div class="d-flex justify-content-center align-items-center" style="height:350px;">
+        <a href="/select-seats?show_id={{ movie.showtimes[0].show_id }}">
+          <img src="{{ movie.poster_url }}" class="d-block rounded shadow-lg" alt="{{ movie.title }}" style="height:320px; width:auto; object-fit:cover; border:5px solid #ffd700; background:#2a1e00;">
+        </a>
+      </div>
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="fw-bold" style="color:#ffd700; text-shadow:0 2px 8px #000;">{{ movie.title }}</h5>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- Restored original options -->
+<div class="row mt-5 text-center">
+    <div class="col-md-4">
+        <a href="/dashboard" style="text-decoration: none; color: inherit;">
+            <div class="glass h-100 p-3">
+                <h5>📽️ Browse Movies</h5>
+                <p>Latest releases, curated for you.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/select-seats?show_id=1" style="text-decoration: none; color: inherit;">
+            <div class="glass h-100 p-3">
+                <h5>🎫 Smart Seat Booking</h5>
+                <p>Select from a real-time seat map.</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <div class="glass h-100 p-3">
+            <h5>📩 Instant Confirmations</h5>
+            <p>Powered by AWS notifications.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Stylish movie sections -->
+<div class="movie-section">
+  <div class="section-title">🔥 Trending</div>
+  <div class="row justify-content-center">
+    {% for movie in movies[0:3] %}
+    <div class="col-6 col-md-3 mb-4">
+      <a href="/select-seats?show_id={{ movie.showtimes[0].show_id }}">
+        <img src="{{ movie.poster_url }}" class="img-fluid movie-poster" alt="{{ movie.title }}">
+        <div class="poster-title text-center">{{ movie.title }}</div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="movie-section">
+  <div class="section-title">🆕 New Arrivals</div>
+  <div class="row justify-content-center">
+    {% for movie in movies[3:6] %}
+    <div class="col-6 col-md-3 mb-4">
+      <a href="/select-seats?show_id={{ movie.showtimes[0].show_id }}">
+        <img src="{{ movie.poster_url }}" class="img-fluid movie-poster" alt="{{ movie.title }}">
+        <div class="poster-title text-center">{{ movie.title }}</div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="movie-section">
+  <div class="section-title">⭐ Top Picks</div>
+  <div class="row justify-content-center">
+    {% for movie in movies[6:] %}
+    <div class="col-6 col-md-3 mb-4">
+      <a href="/select-seats?show_id={{ movie.showtimes[0].show_id }}">
+        <img src="{{ movie.poster_url }}" class="img-fluid movie-poster" alt="{{ movie.title }}">
+        <div class="poster-title text-center">{{ movie.title }}</div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
