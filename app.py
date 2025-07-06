@@ -2,7 +2,7 @@ from flask import Flask
 import boto3
 from app.routes import bp as routes_bp
 
-app = Flask(_name_)
+app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 app.register_blueprint(routes_bp)
 
@@ -20,5 +20,5 @@ app.config['DYNAMODB_TABLE'] = dynamodb.Table(DYNAMODB_TABLE)
 app.config['SNS_CLIENT'] = sns
 app.config['SNS_TOPIC_ARN'] = SNS_TOPIC_ARN
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
